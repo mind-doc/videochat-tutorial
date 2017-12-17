@@ -1,10 +1,14 @@
 # Schön Digital Labs & N3xtcoder - React VS Vue challenge!
 
+[![Build Status](https://travis-ci.org/mind-doc/videochat-tutorial.svg?branch=master)](https://travis-ci.org/mind-doc/videochat-tutorial)
+
 This repository has been created as a starting point for our workshop. In the workshop we will learn to create a peer2peer video chat using Twillio. We will explore various UI edge cases such as disconnection and connection degradation in addition to anciliary features such as text chat.
 
 Before the event, participants should follow the steps below in Setup section. To gain free admission, participants can submit a *Pull Request* with their solution to the *Teaser Challenge* below.
 
 ## Setup
+
+### Server
 
 All of the API server code is in the folder `./server`. To start development:
 
@@ -14,6 +18,10 @@ yarn install # or npm install (some warnings may occur, but usually nothing fata
 cp .env.example .env # Edit this with the right Twilio credentials (set an empty TWILIO_CHAT_SERVICE_SID if you only want to use video)
 node .
 ```
+
+### UI
+
+The user interface is implemented in the [`ui`](./ui) folder. For further information on the frontend code, go to [`ui/README.md`](ui/README.md).
 
 ## Using the API
 
