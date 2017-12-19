@@ -1,6 +1,6 @@
 # Schön Digital Labs & N3xtcoder - React VS Vue challenge!
 
-[![Build Status](https://travis-ci.org/mind-doc/videochat-tutorial.svg?branch=master)](https://travis-ci.org/mind-doc/videochat-tutorial)
+[![Build Status](https://travis-ci.org/mind-doc/videochat-tutorial.svg?branch=master)](https://travis-ci.org/mind-doc/videochat-tutorial) [![Known Vulnerabilities in server](https://snyk.io/test/github/mind-doc/videochat-tutorial/badge.svg?targetFile=/server/package.json)](https://snyk.io/test/github/mind-doc/videochat-tutorial) [![Known Vulnerabilities in ui](https://snyk.io/test/github/mind-doc/videochat-tutorial/badge.svg?targetFile=/ui/package.json)](https://snyk.io/test/github/mind-doc/videochat-tutorial)
 
 This repository has been created as a starting point for our workshop. In the workshop we will learn to create a peer2peer video chat using Twillio. We will explore various UI edge cases such as disconnection and connection degradation in addition to anciliary features such as text chat.
 
