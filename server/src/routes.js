@@ -1,6 +1,10 @@
 const { passport, isAuthenticated, signJwt } = require('./auth');
 const users = require('./users');
 const { createToken } = require('./twilio');
+const OpenTok = require('opentok');
+
+const { TOKBOX_API_KEY, TOKBOX_API_SECRET } = process.env;
+const opentok = new OpenTok(TOKBOX_API_KEY, TOKBOX_API_SECRET);
 
 /**
  * POSTs a username and password for generating a JWT token
@@ -73,9 +77,29 @@ function getToken(req, res) {
   });
 }
 
+/**
+ * GETs a TokBox Access Token for the logged user
+ * @param{object} req the http request
+ * @param{object} res the http response
+ * @return{undefined} the identity and jwt token as json
+ */
+function getTokboxToken(req, res) {
+  console.log('Generate token for Tokbox');
+  opentok.createSession((err, session) => {
+    if (err) {
+      console.error('Something went wrong:', err);
+      return res.status(400).send({ message: err.message });
+    }
+    return res.status(200).send({
+      token: session.generateToken(),
+    });
+  });
+}
+
 module.exports = function (app) {
   app.use(passport.initialize());
   app.post('/user', authenticate);
   app.get('/info', isAuthenticated, getUserInfo);
   app.get('/token', isAuthenticated, getToken);
+  app.get('/tokboxtoken', isAuthenticated, getTokboxToken);
 };
