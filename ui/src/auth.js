@@ -56,9 +56,23 @@ function getTwilioToken() {
   });
 }
 
+function getTokboxToken() {
+  return new Promise((resolve, reject) => {
+    const t = jwt.get();
+    if (t === null) reject('No JWT available.');
+    axios.get('/api/tokboxtoken', { headers: { Authorization: `Bearer ${t}` } })
+      .then(resolve)
+      .catch(() => {
+        jwt.remove();
+        reject(`JWT ${t} was invalid.`);
+      });
+  });
+}
+
 export default {
   assertAuthenticated,
   getTwilioToken,
   authenticate,
   jwt,
+  getTokboxToken,
 };

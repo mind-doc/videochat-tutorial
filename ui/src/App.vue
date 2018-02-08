@@ -5,6 +5,7 @@
       <b-navbar-nav>
         <b-nav-item href="/">Home</b-nav-item>
         <b-nav-item href="/video-twilio" style="background-color: #f12545;">Twilio</b-nav-item>
+        <b-nav-item href="/video-tokbox" style="background-color: #0099cb;">TokBox</b-nav-item>
       </b-navbar-nav>
       <b-navbar-nav class="pull-right">
         <b-nav-item v-if="loggedIn" href="/logout">Log out!</b-nav-item>
