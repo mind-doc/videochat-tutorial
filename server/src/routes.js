@@ -77,6 +77,9 @@ function getToken(req, res) {
   });
 }
 
+// Should save it to a database
+let sessionId = null;
+
 /**
  * GETs a TokBox Access Token for the logged user
  * @param{object} req the http request
@@ -84,19 +87,30 @@ function getToken(req, res) {
  * @return{undefined} the identity and jwt token as json
  */
 function getTokboxToken(req, res) {
-  console.log('Generate token for Tokbox');
-  opentok.createSession((err, session) => {
-    if (err) {
-      console.error('Something went wrong:', err);
-      return res.status(400).send({ message: err.message });
+  const { username } = req.user;
+  return opentok.createSession((error, session) => {
+    if (error) {
+      return res.status(400).send({ message: error.message });
     }
-    return res.status(200).send({
-      token: session.generateToken(),
-    });
+    if (username === 'doctor') {
+      sessionId = session.sessionId; // eslint-disable-line
+      return res.status(200).send({
+        // Generate a Token from a session object (returned from createSession)
+        token: session.generateToken(),
+        sessionId,
+      });
+    } else if (username === 'patient') {
+      return res.status(200).send({
+        // Generate a Token from just a sessionId (going to be fetched from the database)
+        token: opentok.generateToken(sessionId),
+        sessionId,
+      });
+    }
+    return res.status(500).send({ message: 'Sorry, I can only handle two users. My bad.' });
   });
 }
 
-module.exports = function (app) {
+module.exports = function routes(app) {
   app.use(passport.initialize());
   app.post('/user', authenticate);
   app.get('/info', isAuthenticated, getUserInfo);
