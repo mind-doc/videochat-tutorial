@@ -1,12 +1,12 @@
 import { mount } from 'vue-test-utils';
 
-import Video from '@/components/Video';
+import VideoTwilio from '@/components/VideoTwilio';
 
-describe('Video.vue', () => {
+describe('VideoTwilio.vue', () => {
   let w;
 
   beforeEach(() => {
-    w = mount(Video);
+    w = mount(VideoTwilio);
   });
 
   it('contains local media element', () => {
