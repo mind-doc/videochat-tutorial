@@ -5,6 +5,9 @@ import LoginForm from '@/components/LoginForm';
 import auth from '@/auth';
 import router from '@/router';
 
+jest.mock('@/router', () => ({
+  push: jest.fn(),
+}));
 
 describe('LoginForm.vue', () => {
   let wrapper;
