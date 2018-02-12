@@ -9,8 +9,11 @@
           <div id="subscriber"></div>
         </b-col>
       </b-row>
-      <b-button @click="createSession()" variant="primary" v-if="!sessionCreated" id="create-session">
+      <b-button @click="createSession()" variant="primary" v-if="!session" id="create-session">
         Create Session
+      </b-button>
+      <b-button @click="disconnectSession()" variant="danger" v-if="session" id="disconnect-session">
+        Disconnect from Session
       </b-button>
       <div class="errors" v-if="errors !== 0" v-for="error in errors">{{ error }}</div>
       <div class="logs" v-if="logs.length !== 0" v-for="log in logs">{{ log }}</div>
@@ -44,6 +47,13 @@ export default {
         this.errors.push(`Couldn't fetch token and session ID from app server. ${error}`);
       });
     },
+    disconnectSession() {
+      if (this.session) {
+        this.session.off();
+        this.session.disconnect();
+        this.session = null;
+      }
+    },
     initializeSession() {
       // Initialize an OpenTok publisher object
       // For more info: https://tokbox.com/developer/sdks/js/reference/OT.html#initPublisher
@@ -51,9 +61,7 @@ export default {
         // The DOM element that the publisher video replaces
         'publisher',
         // The properties of the publisher
-        {
-          insertMode: 'push',
-        },
+        { insertMode: 'append' },
         // A function to be called when the method succeeds
         // or fails in initializing a Publisher object.
         (pubError) => {
@@ -72,9 +80,9 @@ export default {
           this.errors.push(`Couldn't connect to session. ${connErr}`);
           return;
         }
-        this.sessionCreated = true;
+        this.session = session;
         this.logs.push('Connected to session');
-        session.publish(publisher, (pubErr) => {
+        this.session.publish(publisher, (pubErr) => {
           if (pubErr) {
             this.errors.push(`Couldn't publish to the session. ${pubErr}`);
             return;
@@ -82,7 +90,7 @@ export default {
           this.logs.push('Successfully publishing to the session');
         });
         // Subscribe to (or view) each other's streams in the session.
-        session.on(
+        this.session.on(
           // When a new stream is created in the session,
           // the Session object dispatches a streamCreated event
           'streamCreated',
@@ -95,16 +103,13 @@ export default {
               // DOM element ID that the subscriber video replace
               'subscriber',
               // Customize the appearance of the subscriber view
-              {
-                insertMode: 'push',
-              },
+              { insertMode: 'append' },
               // Completion handler function
               (error) => {
                 if (error) {
                   this.errors.push(`Couldn't subscribe to the created stream. Error: ${error}`);
                   return;
                 }
-                console.log(event);
                 this.logs.push('Subscribed to the created stream');
               },
             );
@@ -117,6 +122,7 @@ export default {
     return {
       apiKey: process.env.TOKBOX_API_KEY,
       sessionId: '',
+      session: null,
       token: '',
       errors: [],
       logs: [],
