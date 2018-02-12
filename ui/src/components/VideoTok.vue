@@ -9,7 +9,9 @@
           <div id="subscriber"></div>
         </b-col>
       </b-row>
-      <b-button @click="createSession()" variant="primary" v-if="!sessionCreated">Create Session</b-button>
+      <b-button @click="createSession()" variant="primary" v-if="!sessionCreated" id="create-session">
+        Create Session
+      </b-button>
       <div class="errors" v-if="errors !== 0" v-for="error in errors">{{ error }}</div>
       <div class="logs" v-if="logs.length !== 0" v-for="log in logs">{{ log }}</div>
       <pre>
