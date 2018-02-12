@@ -22,9 +22,10 @@ describe('auth.js', () => {
       expect(typeof auth.authenticate).toEqual('function');
     });
 
-    it('makes a POST request to /api/user with the passed in parameters', () => {
-      axios.post.mockImplementation(() => Promise.resolve());
-      auth.authenticate(username, password);
+    it('makes a POST request to /api/user with the passed in parameters', async () => {
+      // auth.authenticate expext jwt
+      axios.post.mockImplementation(() => Promise.resolve({ data: { jwt: 'something' } }));
+      await auth.authenticate(username, password);
       expect(axios.post).toBeCalledWith('/api/user', { username, password });
     });
 
