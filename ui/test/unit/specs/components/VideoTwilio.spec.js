@@ -18,23 +18,23 @@ describe('VideoTwilio.vue', () => {
 
     const startPreviewBtn = buttons.at(0);
     expect(startPreviewBtn.text()).toEqual('Preview My Camera');
-    expect(startPreviewBtn.hasAttribute('size', 'sm')).toBe(true);
-    expect(startPreviewBtn.hasAttribute('variant', 'primary')).toBe(true);
+    expect(startPreviewBtn.attributes().size).toBe('sm');
+    expect(startPreviewBtn.attributes().variant).toBe('primary');
 
     const stopPreviewBtn = buttons.at(1);
     expect(stopPreviewBtn.text()).toEqual('Stop preview');
-    expect(stopPreviewBtn.hasAttribute('size', 'sm')).toBe(true);
-    expect(stopPreviewBtn.hasAttribute('variant', 'danger')).toBe(true);
+    expect(stopPreviewBtn.attributes().size).toBe('sm');
+    expect(stopPreviewBtn.attributes().variant).toBe('danger');
 
     const joinRoomBtn = buttons.at(2);
     expect(joinRoomBtn.text()).toEqual('Join');
-    expect(joinRoomBtn.hasAttribute('size', 'sm')).toBe(true);
-    expect(joinRoomBtn.hasAttribute('variant', 'success')).toBe(true);
+    expect(joinRoomBtn.attributes().size).toBe('sm');
+    expect(joinRoomBtn.attributes().variant).toBe('success');
 
     const leaveRoomBtn = buttons.at(3);
     expect(leaveRoomBtn.text()).toEqual('Leave');
-    expect(leaveRoomBtn.hasAttribute('size', 'sm')).toBe(true);
-    expect(leaveRoomBtn.hasAttribute('variant', 'danger')).toBe(true);
+    expect(leaveRoomBtn.attributes().size).toBe('sm');
+    expect(leaveRoomBtn.attributes().variant).toBe('danger');
   });
 
   it('contains remote media element', () => {
@@ -44,8 +44,8 @@ describe('VideoTwilio.vue', () => {
   it('contains alert', () => {
     const alert = w.find('b-alert');
     expect(alert.text()).toEqual('');
-    expect(alert.hasAttribute('variant', 'danger')).toBe(true);
-    expect(alert.hasAttribute('dismissible', '')).toBe(true);
+    expect(alert.attributes().variant).toBe('danger');
+    expect(alert.attributes().dismissible).toBe('');
   });
 
   it('contains chat messages element', () => {
@@ -54,7 +54,7 @@ describe('VideoTwilio.vue', () => {
 
   it('contains chat input element', () => {
     const chatInput = w.find('input#chat-input');
-    expect(chatInput.hasAttribute('type', 'text')).toBe(true);
-    expect(chatInput.hasAttribute('placeholder', 'say anything')).toBe(true);
+    expect(chatInput.attributes().type).toBe('text');
+    expect(chatInput.attributes().placeholder).toBe('say anything');
   });
 });
