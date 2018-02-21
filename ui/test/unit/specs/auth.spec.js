@@ -22,9 +22,10 @@ describe('auth.js', () => {
       expect(typeof auth.authenticate).toEqual('function');
     });
 
-    it('makes a POST request to /api/user with the passed in parameters', () => {
-      axios.post.mockImplementation(() => Promise.resolve());
-      auth.authenticate(username, password);
+    it('makes a POST request to /api/user with the passed in parameters', async () => {
+      // auth.authenticate expext jwt
+      axios.post.mockImplementation(() => Promise.resolve({ data: { jwt: 'something' } }));
+      await auth.authenticate(username, password);
       expect(axios.post).toBeCalledWith('/api/user', { username, password });
     });
 
@@ -80,6 +81,34 @@ describe('auth.js', () => {
       expect(auth.jwt.get()).not.toBeNull();
       await expect(auth.assertAuthenticated()).rejects.toEqual(expect.anything());
       expect(auth.jwt.get()).toBeNull();
+    });
+  });
+
+  describe('getTokboxToken', () => {
+    it('rejects, when there is no JWT in local storage', async () => {
+      auth.jwt.get = jest.fn(() => null);
+      await expect(auth.getTokboxToken()).rejects.toEqual('No JWT available.');
+    });
+    it('when jwt is available, makes call to endpoint "/api/tokboxtoken"', async () => {
+      auth.jwt.get = jest.fn(() => '4m4z1ng-jwt-t0k3n');
+      axios.get.mockImplementation(() => Promise.resolve());
+      await auth.getTokboxToken();
+      expect(axios.get).toBeCalledWith(
+        '/api/tokboxtoken',
+        { headers: { Authorization: 'Bearer 4m4z1ng-jwt-t0k3n' } },
+      );
+    });
+    it('when axios.get resolves, so does getTokboxToken', async () => {
+      auth.jwt.get = jest.fn(() => '4m4z1ng-jwt-t0k3n');
+      axios.get.mockImplementation(() => Promise.resolve({ some: 'data' }));
+      await expect(auth.getTokboxToken()).resolves.toEqual(expect.anything());
+    });
+    it('removes the jwt token and promise rejects, when the GET /api/tokboxtoken fails', async () => {
+      auth.jwt.get = jest.fn(() => '4m4z1ng-jwt-t0k3n');
+      auth.jwt.remove = jest.fn();
+      axios.get.mockImplementation(() => Promise.reject({ some: 'error' }));
+      await expect(auth.getTokboxToken()).rejects.toEqual(expect.anything());
+      expect(auth.jwt.remove).toBeCalled();
     });
   });
 });
