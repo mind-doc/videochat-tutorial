@@ -97,12 +97,14 @@ function getTokboxToken(req, res) {
       return res.status(200).send({
         // Generate a Token from a session object (returned from createSession)
         token: session.generateToken(),
+        apiKey: process.env.TOKBOX_API_KEY,
         sessionId,
       });
     } else if (username === 'patient') {
       return res.status(200).send({
-        // Generate a Token from just a sessionId (going to be fetched from the database)
+        // Generate a Token from a sessionId (going to be fetched from the database)
         token: opentok.generateToken(sessionId),
+        apiKey: process.env.TOKBOX_API_KEY,
         sessionId,
       });
     }

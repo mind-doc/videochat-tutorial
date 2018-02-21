@@ -39,6 +39,7 @@ export default {
     createSession() {
       auth.getTokboxToken().then((response) => {
         this.logs.push(`Got response from app server with ${JSON.stringify(Object.keys(response.data))} keys`);
+        this.apiKey = response.data.apiKey;
         this.sessionId = response.data.sessionId;
         this.token = response.data.token;
         this.logs.push('Initialize session...');
@@ -120,7 +121,7 @@ export default {
   },
   data() {
     return {
-      apiKey: process.env.TOKBOX_API_KEY,
+      apiKey: '',
       sessionId: '',
       session: null,
       token: '',
