@@ -6,7 +6,9 @@
   "scripts": {
     "lint": "eslint --ext .js --ignore-path .gitignore .",
     "start": "node index.js",
-    "test": "jest  --config test/jest.conf.js"
+    "test": "jest  --config test/jest.conf.js",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "dependencies": {
     "body-parser": "1.18.2",
@@ -16,7 +18,8 @@
     "opentok": "^2.6.1",
     "passport": "0.4.0",
     "passport-jwt": "^3.0.0",
-    "twilio": "^3.11.0"
+    "twilio": "^3.17.1",
+    "snyk": "^1.114.0"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
@@ -38,5 +41,6 @@
     "jest": "^21.2.1",
     "superagent": "^3.8.2",
     "supertest": "^3.0.0"
-  }
+  },
+  "snyk": true
 }
