@@ -1,0 +1,18 @@
+# Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
+version: v1.14.1
+ignore: {}
+# patches apply the minimum changes required to fix a vulnerability
+patch:
+  SNYK-JS-LODASH-567746:
+    - bootstrap-vue > opencollective > inquirer > lodash:
+        patched: '2020-05-01T05:40:48.551Z'
+    - twilio-chat > isomorphic-form-data > form-data > async > lodash:
+        patched: '2020-05-01T05:40:48.551Z'
+    - twilio-chat > twilio-mcs-client > isomorphic-form-data > form-data > async > lodash:
+        patched: '2020-05-01T05:40:48.551Z'
+    - twilio-chat > twilio-mcs-client > pug > pug-code-gen > constantinople > babel-types > lodash:
+        patched: '2020-05-01T05:40:48.551Z'
+    - twilio-chat > twilio-mcs-client > pug > pug-filters > constantinople > babel-types > lodash:
+        patched: '2020-05-01T05:40:48.551Z'
+    - twilio-chat > twilio-mcs-client > pug > pug-code-gen > pug-attrs > constantinople > babel-types > lodash:
+        patched: '2020-05-01T05:40:48.551Z'
