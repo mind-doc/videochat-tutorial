@@ -16,7 +16,7 @@
     "opentok": "^2.6.1",
     "passport": "0.4.0",
     "passport-jwt": "^3.0.0",
-    "twilio": "^3.11.0"
+    "twilio": "^3.16.0"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
